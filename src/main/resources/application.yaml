@@ -1,0 +1,131 @@
+spring:
+  profiles:
+    active: dev
+camel:
+  springboot:
+    shutdown-timeout: 2
+    health.indicator.enable: true #with this attribute we are exposing our camel routes 'health' as part of as part of enabling this feature.
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: "*"
+  security:
+    enabled: false #making this as false, as if we hit the health endpoint from browser, basically we are going to see what all different components that are running as part of this app, and what are the status of all those components.
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres-springboot-camel
+    username: postgres
+    password: postgres
+    jdbc-url: jdbc:postgresql://localhost:5432/postgres-springboot-camel
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: savarn.learning@gmail.com
+    password: ctlm fovx ruxd fsfv
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+mailTo: sauravsavarn@gmail.com
+mailFrom: savarn.learning@gmail.com
+
+fromRoute1: timer:RestCamelRoute?period=10s
+fromRoute2: https://restcountries.com/v3.1/name
+toRESTRoute: http://localhost:9090/country
+toRoute: log:?level=info&showBody=true
+toRoute1:  file:data/output
+toRoute2:  jdbc:dataSource #toRoute2 is the route to the database
+toRoute3:  file:data/output?fileName=Success.txt #signify toRoute SUCCESS is logged into.
+healthRoute: timer:HealthRoute?period=10s  #as want this health endpoint to hit every 10sec, and then check the status of all the components in the camel. If any status is DOWN, then want to trigger an email to the appropriate team.
+
+fromRouteTest: direct:input
+
+message: DEV environment
+---
+spring:
+  config:
+    activate:
+      on-profile: stage
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres-springboot-camel
+    username: postgres
+    password: postgres
+    jdbc-url: jdbc:postgresql://localhost:5432/postgres-springboot-camel
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: savarn.learning@gmail.com
+    password: ctlm fovx ruxd fsfv
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+mailTo: sauravsavarn@gmail.com
+mailFrom: savarn.learning@gmail.com
+
+fromRoute1: timer:RestCamelRoute?period=10s
+fromRoute2: https://restcountries.com/v3.1/name
+toRESTRoute: http://localhost:9090/country
+toRoute: log:?level=info&showBody=true
+toRoute1:  file:data/output
+toRoute2:  jdbc:dataSource #toRoute2 is the route to the database
+toRoute3:  file:data/output?fileName=Success.txt #signify toRoute SUCCESS is logged into.
+healthRoute: timer:HealthRoute?period=10s  #as want this health endpoint to hit every 10sec, and then check the status of all the components in the camel. If any status is DOWN, then want to trigger an email to the appropriate team.
+
+fromRouteTest: direct:input
+
+message: STAGE environment
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres-springboot-camel
+    username: postgres
+    password: postgres
+    jdbc-url: jdbc:postgresql://localhost:5432/postgres-springboot-camel
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: savarn.learning@gmail.com
+    password: ctlm fovx ruxd fsfv
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+mailTo: sauravsavarn@gmail.com
+mailFrom: savarn.learning@gmail.com
+
+fromRoute1: timer:RestCamelRoute?period=10s
+fromRoute2: https://restcountries.com/v3.1/name
+toRESTRoute: http://localhost:9090/country
+toRoute: log:?level=info&showBody=true
+toRoute1:  file:data/output
+toRoute2:  jdbc:dataSource #toRoute2 is the route to the database
+toRoute3:  file:data/output?fileName=Success.txt #signify toRoute SUCCESS is logged into.
+healthRoute: timer:HealthRoute?period=10s  #as want this health endpoint to hit every 10sec, and then check the status of all the components in the camel. If any status is DOWN, then want to trigger an email to the appropriate team.
+
+fromRouteTest: direct:input
+
+message: PROD environment
+---

@@ -1,0 +1,6 @@
+### to build code without test
+$> ./gradlew clean build -x test
+
+### to build code with test.
+NOTE: just remove -x test.
+      if any lifecycle to be excluded just add -x before.

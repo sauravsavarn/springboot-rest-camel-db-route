@@ -1,0 +1,81 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.2'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.spring.camel.route'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.apache.camel.springboot:camel-spring-boot-starter:4.3.0'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // https://mvnrepository.com/artifact/org.apache.camel/camel-test-spring
+    testImplementation group: 'org.apache.camel', name: 'camel-test-spring', version: '3.22.1'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-io
+    implementation group: 'org.apache.commons', name: 'commons-io', version: '1.3.2'
+    // https://mvnrepository.com/artifact/org.apache.camel/camel-bindy
+    implementation group: 'org.apache.camel', name: 'camel-bindy', version: '4.3.0'
+    // https://mvnrepository.com/artifact/org.apache.camel/camel-csv
+    implementation group: 'org.apache.camel', name: 'camel-csv', version: '4.3.0'
+
+    //////////dependencies required for database configuration with spring-boot application //////
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '3.2.2'
+    // https://mvnrepository.com/artifact/org.apache.camel/camel-jdbc
+    implementation group: 'org.apache.camel', name: 'camel-jdbc', version: '4.3.0'
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.1'
+
+    /////////dependencies required for email notification for error event as per the application overview.
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '3.2.2'
+
+    /////////dependencies required for application health monitoring.
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+
+    /////////dependencies required for connecting to the HTTP Endpoint
+    // https://mvnrepository.com/artifact/org.apache.camel/camel-http
+    implementation group: 'org.apache.camel', name: 'camel-http', version: '4.3.0'
+
+    /////////dependencies required for JSON to JAVA object conversion.
+    // https://mvnrepository.com/artifact/org.apache.camel/camel-gson
+    implementation group: 'org.apache.camel', name: 'camel-gson', version: '4.3.0'
+    // https://mvnrepository.com/artifact/org.apache.camel.springboot/camel-jackson-starter
+//    implementation group: 'org.apache.camel.springboot', name: 'camel-jackson-starter', version: '4.3.0'
+    // https://mvnrepository.com/artifact/org.apache.camel/camel-jackson
+    implementation group: 'org.apache.camel', name: 'camel-jackson', version: '4.3.0'
+
+
+    /////////dependencies required to print the data post data persistence in sql db
+    // https://mvnrepository.com/artifact/org.apache.camel/camel-sql
+    implementation group: 'org.apache.camel', name: 'camel-sql', version: '4.3.0'
+
+    /////////dependencies required for creation of Route2 which is actually a rest api
+    // https://mvnrepository.com/artifact/org.apache.camel/camel-jetty
+    implementation group: 'org.apache.camel', name: 'camel-jetty', version: '4.3.0'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
